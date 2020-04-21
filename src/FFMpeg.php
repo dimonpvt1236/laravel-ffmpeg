@@ -8,6 +8,7 @@ use Illuminate\Contracts\Filesystem\Factory as Filesystems;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Psr\Log\LoggerInterface;
+use Illuminate\Support\Facades\Log;
 
 class FFMpeg
 {
@@ -24,6 +25,10 @@ class FFMpeg
         static::$filesystems = $filesystems;
 
         $ffmpegConfig = $config->get('laravel-ffmpeg');
+
+        if (config('logger')) {
+            $logger = Log::channel(config('logger'));
+        }
 
         $this->ffmpeg = BaseFFMpeg::create([
             'ffmpeg.binaries'  => Arr::get($ffmpegConfig, 'ffmpeg.binaries'),
