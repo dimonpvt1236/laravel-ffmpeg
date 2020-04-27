@@ -26,8 +26,8 @@ class FFMpeg
 
         $ffmpegConfig = $config->get('laravel-ffmpeg');
 
-        if (config('logger')) {
-            $logger = Log::channel(config('logger'));
+        if ($channel = Arr::get($ffmpegConfig, 'logger')) {
+            $logger = Log::channel($channel);
         }
 
         $this->ffmpeg = BaseFFMpeg::create([
